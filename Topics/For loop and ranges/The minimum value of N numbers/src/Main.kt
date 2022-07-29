@@ -1,3 +1,5 @@
 fun main() {
-    // write your code here
+    val list = List(readln().toInt()) { readln().toInt() }
+
+    println(list.minOrNull())
 }
