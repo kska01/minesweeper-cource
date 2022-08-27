@@ -1,63 +1,108 @@
-fun main() {
-    val input = readln()
+const val THREE = 3
+
+fun stringToDigit(string: String): String {
     val vowels = "aeiouy"
-    var inputToDigit = ""
-    var count1 = 1
-    var count2 = 1
-    var result = 0
-    var total = 0
-
-    for (ch in input) {
-        inputToDigit += if (ch in vowels) "0" else "1"
+    var stringToDigit = ""
+    for (ch in string) {
+        stringToDigit += if (ch in vowels) "0" else "1"
     }
+    return stringToDigit
+}
 
-    for (ch in inputToDigit) {
+fun isOneLetter(digitsOfString: String): Boolean {
+    var total = 0
+    var result = false
+
+    for (ch in digitsOfString) {
         total += ch.toString().toInt()
     }
 
-    if (total == 0 || total == inputToDigit.length) {
+    if (total == 0 || total == digitsOfString.length) {
         println(
-            if (inputToDigit.length % 2 == 0) {
-                inputToDigit.length / 2 - 1
+            if (digitsOfString.length % 2 == 0) {
+                digitsOfString.length / 2 - 1
             } else {
-                inputToDigit.length / 2
+                digitsOfString.length / 2
             }
         )
-        return
+        result = true
     }
 
-    if (inputToDigit.contains("000")) {
-        for (i in 0 until inputToDigit.lastIndex) {
-            if (inputToDigit[i] == '0' && inputToDigit[i] == inputToDigit[i + 1]) {
-                count1 += 1
-            } else {
-                if (count1 >= 3) {
-                    result += if (count1 % 2 == 0) {
-                        count1 / 2 - 1
-                    } else {
-                        count1 / 2
-                    }
+    return result
+}
+
+fun countVowels(digitsOfString: String): Int {
+    var count = 1
+    var result = 0
+
+    for (i in 0 until digitsOfString.lastIndex) {
+        if (digitsOfString[i] == '0' && digitsOfString[i] == digitsOfString[i + 1]) {
+            count += 1
+        } else {
+            if (count >= THREE) {
+                result += if (count % 2 == 0) {
+                    count / 2 - 1
+                } else {
+                    count / 2
                 }
             }
+            count = 1
+        }
+    }
+    if (count >= THREE) {
+        result += if (count % 2 == 0) {
+            count / 2 - 1
+        } else {
+            count / 2
         }
     }
 
-    if (inputToDigit.contains("111")) {
-        for (i in 0 until inputToDigit.lastIndex) {
-            if (inputToDigit[i] == '1' && inputToDigit[i] == inputToDigit[i + 1]) {
-                count2 += 1
-            } else {
-                if (count2 >= 3) {
-                    result += if (count2 % 2 == 0) {
-                        count2 / 2 - 1
-                    } else {
-                        count2 / 2
-                    }
+    return result
+}
+
+fun countConsonants(digitsOfString: String): Int {
+    var count = 1
+    var result = 0
+
+    for (i in 0 until digitsOfString.lastIndex) {
+        if (digitsOfString[i] == '1' && digitsOfString[i] == digitsOfString[i + 1]) {
+            count += 1
+        } else {
+            if (count >= THREE) {
+                result += if (count % 2 == 0) {
+                    count / 2 - 1
+                } else {
+                    count / 2
                 }
             }
+            count = 1
         }
     }
+    if (count >= THREE) {
+        result += if (count % 2 == 0) {
+            count / 2 - 1
+        } else {
+            count / 2
+        }
+    }
+
+    return result
+}
+
+fun main() {
+    val input = readln()
+    var digitsOfString = ""
+    var result = 0
+
+    digitsOfString = stringToDigit(input)
+
+    if (isOneLetter(digitsOfString)) return
+
+    if (digitsOfString.contains("000")) result += countVowels(digitsOfString)
+    if (digitsOfString.contains("111")) result += countConsonants(digitsOfString)
+
     println(
         if (result == 0) 0 else result
     )
 }
+
