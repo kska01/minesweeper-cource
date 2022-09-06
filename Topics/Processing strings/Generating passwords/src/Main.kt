@@ -36,31 +36,36 @@ fun remainder(num: Int): String {
     return result
 }
 
-fun check(str: String): String {
-    for (i in 0 until str.lastIndex) {
-        if (str[i] == str[i + 1])
+fun check(password: List<Char>): Boolean {
+    var flag = true
+    for (i in 0 until password.lastIndex) {
+        if (password[i] == password[i + 1]) flag = false
     }
+    return flag
 }
 
 fun main() {
     val (a, b, c, d) = readln().split(' ').map { it.toInt() }
-    var passwords = ""
-    var uppercase = ""
-    var lowercase = ""
-    var digits = ""
+    var letters = ""
 
-    if ((a + b + c + d) == 0 ) {
+    if (a + b + c + d == 0) {
         println()
         return
     }
 
-    
-    uppercase += uppercase(a)
-    lowercase += lowercase(b)
-    digits += digits(c)
+    letters += uppercase(a)
+    letters += lowercase(b)
+    letters += digits(c)
 
-    if ((a + b + c) < d) {
-        passwords += remainder(d - (a + b + c))
+    if (a + b + c < d) {
+        letters += remainder(d - (a + b + c))
     }
 
+    var password = letters.toList().shuffled()
+
+    while (!check(password)) {
+        password = password.shuffled()
+    }
+
+    println(password.joinToString(""))
 }
