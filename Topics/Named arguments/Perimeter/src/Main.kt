@@ -1,4 +1,3 @@
-import kotlin.math.abs
 import kotlin.math.hypot
 
 fun perimeter(
@@ -12,9 +11,9 @@ fun perimeter(
     y4: Double = y1
 ): Double {
     val side = mutableListOf<Double>()
-    side += hypot(abs(x1 - x2), abs(y1 - y2))
-    side += hypot(abs(x2 - x3), abs(y2 - y3))
-    side += hypot(abs(x3 - x4), abs(y3 - y4))
-    side += hypot(abs(x1 - x4), abs(y1 - y4))
+    side += hypot(x1 - x2, y1 - y2)
+    side += hypot(x2 - x3, y2 - y3)
+    side += hypot(x3 - x4, y3 - y4)
+    side += hypot(x1 - x4, y1 - y4)
     return side.sum()
 }
